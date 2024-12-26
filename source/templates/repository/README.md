@@ -31,11 +31,33 @@ If the token owner is not the repository owner, then the `user` option must be s
 
 *Example: render `lowlighter/metrics` repository*
 ```yml
-- uses: lowlighter/metrics@latest
-  with:
-    template: repository
-    user: lowlighter
-    repo: metrics
+name: Metrics
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  push:
+    branches:
+      - main
+
+jobs:
+  metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Metrics
+        uses: lowlighter/metrics@latest
+        with:
+          template: repository
+          filename: github-metrics.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+          user: tan7bot
+          repo: tan7bot
+          plugin_lines: yes
+          plugin_followup: yes
+          plugin_projects: no
+          plugin_languages_sections: most-used
+          plugin_stargazers: yes
+          plugin_traffic: yes
 ```
 
 ## ℹ️ Examples workflows
